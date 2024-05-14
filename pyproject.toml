@@ -1,0 +1,48 @@
+[build-system]
+requires = [ "poetry-core>=1.0.0",]
+build-backend = "poetry.core.masonry.api"
+
+[tool.poetry]
+name = "sample-fastapi-oidc-uma"
+version = "1.0.0"
+description = "Company LLM Platform."
+authors = [ "Leftshift One <contact@leftshift.one>",]
+
+[tool.isort]
+profile = "black"
+line_length = 88
+lines_after_imports = 2
+
+[tool.ruff]
+target-version = "py312"
+select = ["B", "E", "F", "I", "W"]
+
+[tool.ruff.isort]
+lines-after-imports = 2
+
+[tool.poetry.dependencies]
+python = "~3.12.2"
+fastapi = "0.110.1"
+loguru = "0.7.2"
+pydantic = "2.7.0"
+pydantic-settings = "2.2.1"
+pysbd = "0.3.4"
+sse-starlette = "2.1.0"
+uvicorn = "0.29.0"
+aiohttp = "3.9.5"
+
+[tool.poetry.dev-dependencies]
+pytest = "7.4.2"
+pytest-cov = "3.0.0"
+flake8 = "5.0.3"
+ddt = "1.5.0"
+isort = "5.12.0"
+black = "^24.2.0"
+
+[tool.pytest.ini_options]
+minversion = "6.0"
+testpaths = [ "tests", "tests_integration", "tests_e2e"]
+python_files = [ "test_*.py", "*Test.py", "*_test.py",]
+
+[git]
+commit_ref = "-"
