@@ -1,0 +1,37 @@
+version: "3"
+services:
+  sample-keycloak:
+    image: quay.io/keycloak/keycloak:24.0.4
+    restart: always
+    container_name: "sample-keycloak"
+    hostname: "sample-keycloak"
+    volumes:
+      - ./sample-realm.json:/opt/keycloak/data/import/sample-realm.json:ro
+    ports:
+      - "8088:8080"
+    command: "start-dev --import-realm"
+    environment:
+      - KC_LOG_LEVEL=debug
+      - KC_HOSTNAME=localhost
+      - KC_HOSTNAME_PORT=8088
+      - KC_DB=dev-file
+      - KEYCLOAK_ADMIN=admin
+      - KEYCLOAK_ADMIN_PASSWORD=admin
+    networks:
+      - sample
+  sample-inbucket:
+    image: inbucket/inbucket:3.0.3
+    restart: always
+    container_name: "sample-inbucket"
+    hostname: "sample-inbucket"
+    ports:
+      - "8025:9000" # UI
+      - "2500:2500" # SMTP
+      - "1100:1100" # POP3
+    environment:
+      INBUCKET_LOGLEVEL: "info"
+    networks:
+      - sample
+networks:
+  sample:
+    driver: bridge
